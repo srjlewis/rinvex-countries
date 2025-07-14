@@ -23,7 +23,7 @@ class Country
      *
      * @param array $attributes
      *
-     * @throws \Exception
+     * @throws Exception
      */
     public function __construct($attributes)
     {
@@ -45,7 +45,7 @@ class Country
      *
      * @return $this
      */
-    public function setAttributes($attributes)
+    public function setAttributes($attributes): static
     {
         $this->attributes = $attributes;
 
@@ -54,8 +54,6 @@ class Country
 
     /**
      * Get the attributes.
-     *
-     * @return array|null
      */
     public function getAttributes(): ?array
     {
@@ -66,11 +64,10 @@ class Country
      * Set single attribute.
      *
      * @param string $key
-     * @param mixed  $value
      *
      * @return $this
      */
-    public function set($key, $value)
+    public function set($key, mixed $value): static
     {
         $this->attributes[$key] = $value;
 
@@ -81,11 +78,10 @@ class Country
      * Get an item from attributes array using "dot" notation.
      *
      * @param string $key
-     * @param mixed  $default
      *
      * @return mixed
      */
-    public function get($key, $default = null)
+    public function get($key, mixed $default = null)
     {
         $array = $this->attributes;
 
@@ -110,8 +106,6 @@ class Country
 
     /**
      * Get the common name.
-     *
-     * @return string|null
      */
     public function getName(): ?string
     {
@@ -120,8 +114,6 @@ class Country
 
     /**
      * Get the official name.
-     *
-     * @return string|null
      */
     public function getOfficialName(): ?string
     {
@@ -132,8 +124,6 @@ class Country
      * Get the given native name or fallback to first native name.
      *
      * @param string|null $languageCode
-     *
-     * @return string|null
      */
     public function getNativeName($languageCode = null): ?string
     {
@@ -147,8 +137,6 @@ class Country
      * Get the given native official name or fallback to first native official name.
      *
      * @param string|null $languageCode
-     *
-     * @return string|null
      */
     public function getNativeOfficialName($languageCode = null): ?string
     {
@@ -160,8 +148,6 @@ class Country
 
     /**
      * Get the native names.
-     *
-     * @return array|null
      */
     public function getNativeNames(): ?array
     {
@@ -170,8 +156,6 @@ class Country
 
     /**
      * Get the demonym.
-     *
-     * @return string|null
      */
     public function getDemonym(): ?string
     {
@@ -180,8 +164,6 @@ class Country
 
     /**
      * Get the capital.
-     *
-     * @return string|null
      */
     public function getCapital(): ?string
     {
@@ -210,8 +192,6 @@ class Country
 
     /**
      * Get the ISO 3166-1 numeric.
-     *
-     * @return string|null
      */
     public function getIsoNumeric(): ?string
     {
@@ -222,8 +202,6 @@ class Country
      * Get the given currency or fallback to first currency.
      *
      * @param string|null $currency
-     *
-     * @return array|null
      */
     public function getCurrency($currency = null): ?array
     {
@@ -234,8 +212,6 @@ class Country
 
     /**
      * Get the currencies.
-     *
-     * @return array|null
      */
     public function getCurrencies(): ?array
     {
@@ -244,8 +220,6 @@ class Country
 
     /**
      * Get the TLD.
-     *
-     * @return string|null
      */
     public function getTld(): ?string
     {
@@ -254,8 +228,6 @@ class Country
 
     /**
      * Get the TLDs.
-     *
-     * @return array|null
      */
     public function getTlds(): ?array
     {
@@ -264,8 +236,6 @@ class Country
 
     /**
      * Get the alternative spellings.
-     *
-     * @return array|null
      */
     public function getAltSpellings(): ?array
     {
@@ -276,8 +246,6 @@ class Country
      * Get the given language or fallback to first language.
      *
      * @param string|null $languageCode
-     *
-     * @return string|null
      */
     public function getLanguage($languageCode = null): ?string
     {
@@ -288,8 +256,6 @@ class Country
 
     /**
      * Get the languages.
-     *
-     * @return array|null
      */
     public function getLanguages(): ?array
     {
@@ -298,8 +264,6 @@ class Country
 
     /**
      * Get the translations.
-     *
-     * @return array
      */
     public function getTranslations(): array
     {
@@ -315,7 +279,7 @@ class Country
         $natives = $this->getNativeNames() ?: [];
 
         // Get other translations
-        $file = __DIR__.'/../resources/translations/'.mb_strtolower($this->getIsoAlpha2()).'.json';
+        $file = __DIR__.'/../resources/translations/'.mb_strtolower((string) $this->getIsoAlpha2()).'.json';
         $translations = file_exists($file) ? json_decode(file_get_contents($file), true) : [];
 
         // Merge all names together
@@ -331,8 +295,6 @@ class Country
      * Get the translation.
      *
      * @param string|null $languageCode
-     *
-     * @return array
      */
     public function getTranslation($languageCode = null): array
     {
@@ -341,8 +303,6 @@ class Country
 
     /**
      * Get the geodata.
-     *
-     * @return array|null
      */
     public function getGeodata(): ?array
     {
@@ -351,8 +311,6 @@ class Country
 
     /**
      * Get the continent.
-     *
-     * @return string|null
      */
     public function getContinent(): ?string
     {
@@ -371,8 +329,6 @@ class Country
 
     /**
      * Get the latitude.
-     *
-     * @return string|null
      */
     public function getLatitude(): ?string
     {
@@ -381,8 +337,6 @@ class Country
 
     /**
      * Get the longitude.
-     *
-     * @return string|null
      */
     public function getLongitude(): ?string
     {
@@ -391,8 +345,6 @@ class Country
 
     /**
      * Get the described latitude.
-     *
-     * @return string|null
      */
     public function getLatitudeDesc(): ?string
     {
@@ -401,8 +353,6 @@ class Country
 
     /**
      * Get the described longitude.
-     *
-     * @return string|null
      */
     public function getLongitudeDesc(): ?string
     {
@@ -411,8 +361,6 @@ class Country
 
     /**
      * Get the maximum latitude.
-     *
-     * @return string|null
      */
     public function getMaxLatitude(): ?string
     {
@@ -421,8 +369,6 @@ class Country
 
     /**
      * Get the maximum longitude.
-     *
-     * @return string|null
      */
     public function getMaxLongitude(): ?string
     {
@@ -431,8 +377,6 @@ class Country
 
     /**
      * Get the minimum latitude.
-     *
-     * @return string|null
      */
     public function getMinLatitude(): ?string
     {
@@ -441,8 +385,6 @@ class Country
 
     /**
      * Get the minimum longitude.
-     *
-     * @return string|null
      */
     public function getMinLongitude(): ?string
     {
@@ -451,8 +393,6 @@ class Country
 
     /**
      * Get the area.
-     *
-     * @return int|null
      */
     public function getArea(): ?int
     {
@@ -461,8 +401,6 @@ class Country
 
     /**
      * Get the region.
-     *
-     * @return string|null
      */
     public function getRegion(): ?string
     {
@@ -471,8 +409,6 @@ class Country
 
     /**
      * Get the subregion.
-     *
-     * @return string|null
      */
     public function getSubregion(): ?string
     {
@@ -481,8 +417,6 @@ class Country
 
     /**
      * Get the world region.
-     *
-     * @return string|null
      */
     public function getWorldRegion(): ?string
     {
@@ -491,8 +425,6 @@ class Country
 
     /**
      * Get the region code.
-     *
-     * @return string|null
      */
     public function getRegionCode(): ?string
     {
@@ -501,8 +433,6 @@ class Country
 
     /**
      * Get the subregion code.
-     *
-     * @return string|null
      */
     public function getSubregionCode(): ?string
     {
@@ -521,8 +451,6 @@ class Country
 
     /**
      * Get the borders.
-     *
-     * @return array|null
      */
     public function getBorders(): ?array
     {
@@ -531,8 +459,6 @@ class Country
 
     /**
      * Determine whether the country is independent.
-     *
-     * @return string|null
      */
     public function isIndependent(): ?string
     {
@@ -541,8 +467,6 @@ class Country
 
     /**
      * Get the given calling code or fallback to first calling code.
-     *
-     * @return string|null
      */
     public function getCallingCode(): ?string
     {
@@ -551,8 +475,6 @@ class Country
 
     /**
      * Get the calling codes.
-     *
-     * @return array|null
      */
     public function getCallingCodes(): ?array
     {
@@ -561,8 +483,6 @@ class Country
 
     /**
      * Get the national prefix.
-     *
-     * @return string|null
      */
     public function getNationalPrefix(): ?string
     {
@@ -571,8 +491,6 @@ class Country
 
     /**
      * Get the national number length.
-     *
-     * @return int|null
      */
     public function getNationalNumberLength(): ?int
     {
@@ -581,8 +499,6 @@ class Country
 
     /**
      * Get the national number lengths.
-     *
-     * @return array|null
      */
     public function getNationalNumberLengths(): ?array
     {
@@ -591,8 +507,6 @@ class Country
 
     /**
      * Get the national destination code length.
-     *
-     * @return int|null
      */
     public function getNationalDestinationCodeLength(): ?int
     {
@@ -601,8 +515,6 @@ class Country
 
     /**
      * Get the national destination code lengths.
-     *
-     * @return array|null
      */
     public function getnationaldestinationcodelengths(): ?array
     {
@@ -611,8 +523,6 @@ class Country
 
     /**
      * Get the international prefix.
-     *
-     * @return string|null
      */
     public function getInternationalPrefix(): ?string
     {
@@ -621,8 +531,6 @@ class Country
 
     /**
      * Get the extras.
-     *
-     * @return array|null
      */
     public function getExtra(): ?array
     {
@@ -631,8 +539,6 @@ class Country
 
     /**
      * Get the geonameid.
-     *
-     * @return int|null
      */
     public function getGeonameid(): ?int
     {
@@ -641,8 +547,6 @@ class Country
 
     /**
      * Get the edgar code.
-     *
-     * @return string|null
      */
     public function getEdgar(): ?string
     {
@@ -651,8 +555,6 @@ class Country
 
     /**
      * Get the itu code.
-     *
-     * @return string|null
      */
     public function getItu(): ?string
     {
@@ -661,8 +563,6 @@ class Country
 
     /**
      * Get the marc code.
-     *
-     * @return string|null
      */
     public function getMarc(): ?string
     {
@@ -671,8 +571,6 @@ class Country
 
     /**
      * Get the wmo code.
-     *
-     * @return string|null
      */
     public function getWmo(): ?string
     {
@@ -681,8 +579,6 @@ class Country
 
     /**
      * Get the ds code.
-     *
-     * @return string|null
      */
     public function getDs(): ?string
     {
@@ -691,8 +587,6 @@ class Country
 
     /**
      * Get the fifa code.
-     *
-     * @return string|null
      */
     public function getFifa(): ?string
     {
@@ -701,8 +595,6 @@ class Country
 
     /**
      * Get the fips code.
-     *
-     * @return string|null
      */
     public function getFips(): ?string
     {
@@ -711,8 +603,6 @@ class Country
 
     /**
      * Get the gaul code.
-     *
-     * @return int|null
      */
     public function getGaul(): ?int
     {
@@ -721,8 +611,6 @@ class Country
 
     /**
      * Get the ioc code.
-     *
-     * @return string|null
      */
     public function getIoc(): ?string
     {
@@ -731,8 +619,6 @@ class Country
 
     /**
      * Get the cowc code.
-     *
-     * @return string|null
      */
     public function getCowc(): ?string
     {
@@ -741,8 +627,6 @@ class Country
 
     /**
      * Get the cown code.
-     *
-     * @return int|null
      */
     public function getCown(): ?int
     {
@@ -751,8 +635,6 @@ class Country
 
     /**
      * Get the fao code.
-     *
-     * @return int|null
      */
     public function getFao(): ?int
     {
@@ -761,8 +643,6 @@ class Country
 
     /**
      * Get the imf code.
-     *
-     * @return int|null
      */
     public function getImf(): ?int
     {
@@ -781,8 +661,6 @@ class Country
 
     /**
      * Get the address format.
-     *
-     * @return string|null
      */
     public function getAddressFormat(): ?string
     {
@@ -811,8 +689,6 @@ class Country
 
     /**
      * Get the VAT rates.
-     *
-     * @return array|null
      */
     public function getVatRates(): ?array
     {
@@ -821,8 +697,6 @@ class Country
 
     /**
      * Get the emoji.
-     *
-     * @return string|null
      */
     public function getEmoji(): ?string
     {
@@ -831,8 +705,6 @@ class Country
 
     /**
      * Get the geographic data structure.
-     *
-     * @return string|null
      */
     public function getGeoJson(): ?string
     {
@@ -845,8 +717,6 @@ class Country
 
     /**
      * Get the flag.
-     *
-     * @return string|null
      */
     public function getFlag(): ?string
     {
@@ -859,8 +729,6 @@ class Country
 
     /**
      * Get the divisions.
-     *
-     * @return array|null
      */
     public function getDivisions(): ?array
     {
@@ -875,8 +743,6 @@ class Country
      * Get the divisions.
      *
      * @param string $division
-     *
-     * @return array|null
      */
     public function getDivision($division): ?array
     {

@@ -21,9 +21,9 @@ class CountryLoader
      * @param string $code
      * @param bool   $hydrate
      *
-     * @throws \Rinvex\Country\CountryLoaderException
+     * @throws CountryLoaderException
      *
-     * @return \Rinvex\Country\Country|array
+     * @return Country|array
      */
     public static function country($code, $hydrate = true)
     {
@@ -42,7 +42,7 @@ class CountryLoader
      * @param bool $longlist
      * @param bool $hydrate
      *
-     * @throws \Rinvex\Country\CountryLoaderException
+     * @throws CountryLoaderException
      *
      * @return array
      */
@@ -54,23 +54,17 @@ class CountryLoader
             static::$countries[$list] = json_decode(static::getFile(__DIR__.'/../resources/data/'.$list.'.json'), true);
         }
 
-        return $hydrate ? array_map(function ($country) {
-            return new Country($country);
-        }, static::$countries[$list]) : static::$countries[$list];
+        return $hydrate ? array_map(fn($country): Country => new Country($country), static::$countries[$list]) : static::$countries[$list];
     }
 
     /**
      * Filter items by the given key value pair.
      *
      * @param string $key
-     * @param mixed  $operator
-     * @param mixed  $value
      *
-     * @throws \Rinvex\Country\CountryLoaderException
-     *
-     * @return array
+     * @throws CountryLoaderException
      */
-    public static function where($key, $operator, $value = null)
+    public static function where($key, mixed $operator, mixed $value = null): array
     {
         if (func_num_args() === 2) {
             $value = $operator;
@@ -89,11 +83,10 @@ class CountryLoader
      *
      * @param string $key
      * @param string $operator
-     * @param mixed  $value
      *
-     * @return \Closure
+     * @return Closure
      */
-    protected static function operatorForWhere($key, $operator, $value)
+    protected static function operatorForWhere($key, $operator, mixed $value)
     {
         return function ($item) use ($key, $operator, $value) {
             $retrieved = static::get($item, $key);
@@ -119,8 +112,6 @@ class CountryLoader
      *
      * @param array         $items
      * @param callable|null $callback
-     *
-     * @return array
      */
     protected static function filter($items, ?callable $callback = null)
     {
@@ -134,13 +125,11 @@ class CountryLoader
     /**
      * Get an item from an array or object using "dot" notation.
      *
-     * @param mixed        $target
      * @param string|array $key
-     * @param mixed        $default
      *
      * @return mixed
      */
-    protected static function get($target, $key, $default = null)
+    protected static function get(mixed $target, $key, mixed $default = null)
     {
         if (is_null($key)) {
             return $target;
@@ -156,7 +145,7 @@ class CountryLoader
 
                 $result = static::pluck($target, $key);
 
-                return in_array('*', $key) ? static::collapse($result) : $result;
+                return in_array('*', $key, strict: true) ? static::collapse($result) : $result;
             }
 
             if (is_array($target) && array_key_exists($segment, $target)) {
@@ -177,10 +166,8 @@ class CountryLoader
      * @param array             $array
      * @param string|array      $value
      * @param string|array|null $key
-     *
-     * @return array
      */
-    protected static function pluck($array, $value, $key = null)
+    protected static function pluck($array, $value, $key = null): array
     {
         $results = [];
 
@@ -210,10 +197,8 @@ class CountryLoader
      * Collapse an array of arrays into a single array.
      *
      * @param array $array
-     *
-     * @return array
      */
-    protected static function collapse($array)
+    protected static function collapse($array): array
     {
         $results = [];
 
@@ -233,11 +218,11 @@ class CountryLoader
      *
      * @param string $filePath
      *
-     * @throws \Rinvex\Country\CountryLoaderException
+     * @throws CountryLoaderException
      *
      * @return string
      */
-    protected static function getFile($filePath)
+    protected static function getFile($filePath): string | false
     {
         if (! file_exists($filePath)) {
             throw CountryLoaderException::invalidCountry();
